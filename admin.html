@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techno Galaxy Admin Dashboard</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:#eef2f7;
+padding:20px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+.header{
+background:#0d6efd;
+color:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+.form-box{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.1);
+margin-bottom:20px;
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+color:white;
+margin:5px;
+}
+
+
+.save{background:#0d6efd;}
+.edit{background:#fd7e14;}
+.delete{background:#dc3545;}
+.download{background:#198754;}
+
+.note{
+background:white;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>Techno Galaxy Notes Management System</h1>
+<p>Admin Dashboard</p>
+</div>
+
+<div class="cards">
+<div class="card">
+<h2 id="totalNotes">0</h2>
+<p>Total Notes</p>
+</div>
+</div>
+
+<div class="form-box">
+
+<input type="text" id="title" placeholder="Note Title">
+
+<select id="category">
+<option>HTML</option>
+<option>CSS</option>
+<option>JavaScript</option>
+<option>PHP</option>
+<option>MySQL</option>
+</select>
+
+<textarea id="content" rows="8"
+placeholder="Write Notes"></textarea>
+
+<button class="save"
+onclick="saveNote()">
+Save Note
+</button>
+<a href="student.html" target="_blank"> <button type="button" class="download"> 🎥 Join Online Class </button> </a>
+</div>
+
+<input type="text"
+id="search"
+placeholder="Search Notes..."
+onkeyup="searchNotes()">
+
+<div id="notes"></div>
+
+</div>
+
+<script>
+
+const adminPassword="techno123";
+
+let notes=
+JSON.parse(localStorage.getItem("notes"))||[];
+
+let editIndex=-1;
+
+function saveData(){
+localStorage.setItem(
+"notes",
+JSON.stringify(notes)
+);
+showNotes();
+}
+
+function saveNote(){
+
+let title=
+document.getElementById("title").value;
+
+let category=
+document.getElementById("category").value;
+
+let content=
+document.getElementById("content").value;
+
+if(title===""||content===""){
+alert("Fill all fields");
+return;
+}
+
+let note={title,category,content};
+
+if(editIndex===-1){
+notes.push(note);
+}else{
+notes[editIndex]=note;
+editIndex=-1;
+}
+
+saveData();
+
+document.getElementById("title").value="";
+document.getElementById("content").value="";
+}
+
+function editNote(index){
+
+let pass=prompt("Admin Password");
+
+if(pass!==adminPassword){
+alert("Wrong Password");
+return;
+}
+
+document.getElementById("title").value=
+notes[index].title;
+
+document.getElementById("category").value=
+notes[index].category;
+
+document.getElementById("content").value=
+notes[index].content;
+
+editIndex=index;
+}
+
+function deleteNote(index){
+
+let pass=prompt("Admin Password");
+
+if(pass!==adminPassword){
+alert("Wrong Password");
+return;
+}
+
+if(confirm("Delete Note?")){
+notes.splice(index,1);
+saveData();
+}
+}
+
+function downloadNote(index){
+
+let note=notes[index];
+
+const blob=new Blob(
+[note.content],
+{type:"text/plain"}
+);
+
+const url=
+URL.createObjectURL(blob);
+
+const a=
+document.createElement("a");
+
+a.href=url;
+a.download=note.title+".txt";
+
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+
+URL.revokeObjectURL(url);
+}
+
+function showNotes(){
+
+let html="";
+
+notes.forEach((note,index)=>{
+
+html+=`
+<div class="note">
+
+<h3>${note.title}</h3>
+
+<p>
+<b>Category:</b>
+${note.category}
+</p>
+
+<button class="download"
+onclick="downloadNote(${index})">
+Download
+</button>
+
+<button class="edit"
+onclick="editNote(${index})">
+Edit
+</button>
+
+<button class="delete"
+onclick="deleteNote(${index})">
+Delete
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("notes").innerHTML=
+html;
+
+document.getElementById("totalNotes").innerText=
+notes.length;
+}
+
+function searchNotes(){
+
+let value=
+document.getElementById("search")
+.value.toLowerCase();
+
+let cards=
+document.querySelectorAll(".note");
+
+cards.forEach(card=>{
+
+card.style.display=
+card.innerText.toLowerCase()
+.includes(value)
+? "block"
+: "none";
+
+});
+
+}
+
+showNotes();
+
+</script>
+
+</body>
+</html>

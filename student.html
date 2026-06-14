@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techno Galaxy Student Portal</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#0d6efd,#6610f2);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.card{
+width:100%;
+max-width:550px;
+background:#fff;
+border-radius:25px;
+padding:40px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,.2);
+animation:fadeIn 1s ease;
+}
+
+.logo{
+width:100px;
+height:100px;
+background:linear-gradient(135deg,#0d6efd,#6610f2);
+border-radius:50%;
+margin:auto;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:40px;
+color:white;
+margin-bottom:20px;
+}
+
+h1{
+color:#0d6efd;
+margin-bottom:10px;
+}
+
+.sub{
+color:#666;
+margin-bottom:25px;
+}
+
+.live-box{
+background:#f8f9fa;
+padding:20px;
+border-radius:15px;
+margin-bottom:25px;
+border-left:5px solid #198754;
+}
+
+.live{
+color:#198754;
+font-weight:bold;
+font-size:18px;
+}
+
+.join-btn{
+width:100%;
+padding:15px;
+font-size:18px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#198754,#20c997);
+color:white;
+cursor:pointer;
+transition:.3s;
+}
+
+.join-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+
+.info{
+margin-top:25px;
+padding:15px;
+background:#eef5ff;
+border-radius:12px;
+color:#555;
+}
+
+.footer{
+margin-top:20px;
+font-size:13px;
+color:#888;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<div class="logo">
+🎓
+</div>
+
+<h1>Techno Galaxy IT Institute</h1>
+
+<p class="sub">
+Student Online Learning Portal
+</p>
+
+<div class="live-box">
+<p class="live">🟢 Live Class Available</p>
+<p>Click below to join your online class.</p>
+</div>
+
+<button class="join-btn"
+onclick="joinClass()">
+🎥 Join Google Meet Class
+</button>
+
+<div class="info">
+📚 Download Notes <br>
+💻 Attend Live Classes <br>
+🚀 Upgrade Your IT Skills
+</div>
+
+<div class="footer">
+© 2026 Techno Galaxy IT Institute
+</div>
+
+</div>
+
+<script>
+
+function joinClass(){
+
+const meetLink =
+"https://meet.google.com/abc-defg-hij";
+
+/* এখানে তোমার Meet Link বসাবে */
+
+window.open(meetLink,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>
